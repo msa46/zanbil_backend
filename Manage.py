@@ -5,6 +5,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from Main import create_app, db
+from Main.Model.User import User
 
 app = create_app(os.getenv('ZANBIL_ENV') or 'dev')
 
