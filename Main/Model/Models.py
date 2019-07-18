@@ -57,4 +57,14 @@ class TimeTable(db.Model):
     __tablename__ = "timeTable"
     timeTableID=db.Column(db.Integer, primary_key= True, autoincrement=True)
     businessID=db.Column(db.Integer, db.ForeignKey('service.serviceID'), nullable=False)
+    time = db.relationship('Time',backref = 'time', lazy=True)
+
+class Time(db.Model):
+    """Time Model for storing Time related details"""
+    __tablename__ = "time"
+
+    timeID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    startTime = db.Column(db.String(40),nullable=False)
+    endTime = db.Column(db.String(40),nullable=False)
+    timeTableID = db.Column(db.Integer, db.ForeignKey('timeTable.timeTableID'), nullable=False)
 
