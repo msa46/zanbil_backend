@@ -11,6 +11,7 @@ class User(db.Model):
     role = db.Column(db.String(100),default='Admin')
     username = db.Column(db.String(50), unique=True)
     passwordHash = db.Column(db.String(100))
+    manager=db.relationship('Business', backref='user', lazy=True)
 
     @property
     def password(self):
@@ -25,3 +26,14 @@ class User(db.Model):
 
     def __repr__(self):
         return "<User '{}'>".format(self.username)
+
+class Business(db.Model):
+    """ Business Model for storing business related details """
+    __tablename__ = "business"
+
+    businessID = db.Column(db.Integer, primary_key= True, autoincrement=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(255))
+    managerID = db.Column(db.Integer, db.ForeignKey('user.id'),
+        nullable=False)
+    
