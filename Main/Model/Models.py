@@ -50,3 +50,11 @@ class Service(db.Model):
     price = db.Column(db.Integer, nullable=False)
     employerID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable =False)
     businessID = db.Column(db.Integer, db.ForeignKey('business.businessID'), nullable=False)
+    timeTable = db.relationship('TimeTable', backref= 'timeTable',lazy= True)
+
+class TimeTable(db.Model):
+    """TimeTable Model for storing timeTable related details"""
+    __tablename__ = "timeTable"
+    timeTableID=db.Column(db.Integer, primary_key= True, autoincrement=True)
+    businessID=db.Column(db.Integer, db.ForeignKey('service.serviceID'), nullable=False)
+
