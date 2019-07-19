@@ -3,6 +3,8 @@ import unittest
 
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from flask_cors import CORS
+
 
 from Main import create_app, db
 from Main.Model.Models import *
@@ -11,6 +13,7 @@ app = create_app(os.getenv('ZANBIL_ENV') or 'dev')
 
 app.app_context().push()
 
+CORS(app)
 manager = Manager(app)
 
 migrate = Migrate(app, db)
