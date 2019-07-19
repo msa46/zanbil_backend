@@ -56,8 +56,15 @@ class TimeTable(db.Model):
     """TimeTable Model for storing timeTable related details"""
     __tablename__ = "timeTable"
     timeTableID=db.Column(db.Integer, primary_key= True, autoincrement=True)
-    businessID=db.Column(db.Integer, db.ForeignKey('service.serviceID'), nullable=False)
+    serviceID=db.Column(db.Integer, db.ForeignKey('service.serviceID'), nullable=False)
     time = db.relationship('Time',backref = 'time', lazy=True)
+
+
+reserves = db.Table('reserves',
+            db.Column('userID', db.Integer, db.ForeignKey('user.id'), nullable=False),
+            db.Column('timeID', db.Integer, db.ForeignKey('time.timeID'), nullable=False),
+            db.PrimaryKeyConstraint('userID', 'timeID')
+)
 
 class Time(db.Model):
     """Time Model for storing Time related details"""
@@ -67,4 +74,6 @@ class Time(db.Model):
     startTime = db.Column(db.String(40),nullable=False)
     endTime = db.Column(db.String(40),nullable=False)
     timeTableID = db.Column(db.Integer, db.ForeignKey('timeTable.timeTableID'), nullable=False)
+    capacity=db.Column(db.Integer)
+    users = db.relationship('User', secondary= reserves, backref='time')
 
